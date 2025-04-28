@@ -1,0 +1,30 @@
+.carousel-wrapper {
+  width: 100%;
+  height: 300px; /* 세로 길이 */
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 2rem; /* 최신리뷰와의 간격 */
+}
+
+.carousel-inner {
+  width: 100%;
+  height: 100%;
+  display: flex;
+}
+
+.carousel-item {
+  width: 100%;
+  height: 100%;
+  display: flex !important;
+  justify-content: center;
+  align-items: center;
+}
+
+.main-banner-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}

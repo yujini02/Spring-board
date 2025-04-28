@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mybatis="http://mybatis.org/schema/mybatis-spring"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+       http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring-1.2.xsd">
+
+    <!-- config, service 패키지 내부 클래스들을 스프링 빈으로 자동 등록 / 어플리케이션 컨텍스트에 등록을 위한 설정-->
+    <context:component-scan base-package="com.ssg.board.config"/>
+    <context:component-scan base-package="com.ssg.board.service"/>
+
+    <!-- HikariCP 설정 객체 등록 / 데이터베이스 연결을 위한 컨넥션(길과 운송수단 세팅)-->
+    <bean id="hikariConfig" class="com.zaxxer.hikari.HikariConfig">
+        <property name="driverClassName" value="com.mysql.cj.jdbc.Driver"/>
+        <property name="jdbcUrl" value="jdbc:mysql://localhost:3306/ssgdb?serverTimezone=Asia/Seoul"/>
+        <property name="username" value="root"/>
+        <property name="password" value="mysql12345"/>
+        <property name="dataSourceProperties">
+            <props>
+                <prop key="cachePrepStmts">true</prop>
+                <prop key="prepStmtCacheSize">250</prop>
+                <prop key="prepStmtCacheSqlLimit">2048</prop>
+            </props>
+        </property>
+    </bean>
+
+    <!-- HikariCP DataSource Bean 생성 (DB 연결 풀 관리 객체) hikariConfig를 dataSource에 꽂음-->
+    <bean id="dataSource" class="com.zaxxer.hikari.HikariDataSource" destroy-method="close">
+        <constructor-arg ref="hikariConfig"/>
+    </bean>
+
+    <!-- MyBatis에서 실제 SQL의 처리는 SqlSesssionFactory에서 생성하는 SqlSession을 통해서 수행됨 / 세션은 시간이 정해져있음-->
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource" />
+        <property name="configLocation" value="classpath:mybatis-config.xml"/>
+        <property name="mapperLocations" value="classpath:mappers/*.xml"/>
+    </bean>
+
+    <!-- com.ssg.board.mapper 패키지의 Mapper 인터페이스를 스캔하여 자동으로 매퍼 등록 -->
+    <mybatis:scan base-package="com.ssg.board.mapper"/>
+
+</beans>

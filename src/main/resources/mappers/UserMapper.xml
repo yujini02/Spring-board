@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssg.board.mapper.UserMapper">
+    <insert id="insertUser" parameterType="com.ssg.board.domain.UserVO">
+        INSERT INTO tb_user (uemail, upwd, uname)
+        VALUES (#{uemail}, #{upwd}, #{uname})
+    </insert>
+
+    <!-- 이메일로 사용자 한 명 조회 -->
+    <select id="findByEmail" parameterType="string" resultType="com.ssg.board.domain.UserVO">
+        SELECT * FROM tb_user
+        WHERE uemail = #{uemail} AND delflag = 0
+    </select>
+
+    <select id="selectAllUsers" resultType="com.ssg.board.domain.UserVO">
+        SELECT useq, uemail, uname, urole, regdate FROM tb_user ORDER BY useq ASC
+    </select>
+
+    <insert id="insert">
+        insert into tb_board (title, content, writer, regDate) values (#{title},#{content},#{writer},NOW())
+    </insert>
+
+</mapper>
