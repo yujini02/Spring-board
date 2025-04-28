@@ -58,9 +58,21 @@ public class UserController {
     }
 
     @GetMapping("/userlist")
-    public String userList(Model model) {
-        List<UserVO> users = userService.getAllUsers();     // 유저 전체 조회
-        model.addAttribute("userList", users);  // JSP로 전달
+    public String userList(Model model, HttpSession session, RedirectAttributes redirectAttributes) {
+
+        // 세션에서 로그인 사용자 꺼내오기
+        UserVO loginUser = (UserVO) session.getAttribute("loginUser");
+
+        // 로그인하지 않았거나, 관리자가 아니면
+        if (loginUser == null || !"ADMIN".equalsIgnoreCase(loginUser.getUrole())) {
+            redirectAttributes.addFlashAttribute("msg", "관리자만 접근할 수 있습니다.");
+            return "redirect:/board/list"; // 일반회원은 게시판 목록으로 보냄
+        }
+
+        // 관리자만 회원목록 조회 가능
+        List<UserVO> users = userService.getAllUsers();
+        model.addAttribute("userList", users);
+
         return "user/userlist";
     }
 

@@ -1,9 +1,21 @@
-<%@ page contentType="text/html;charset=UTF-8" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
-<html>
+
+<!-- 로그인 체크: 비로그인시 로그인 페이지로 리다이렉트 -->
+<c:if test="${empty loginUser}">
+    <c:redirect url="/user/login" />
+</c:if>
+
+<!DOCTYPE html>
+<html lang="ko">
 <head>
+    <meta charset="UTF-8">
     <title>게시판 목록</title>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/header.css">
+
     <style>
         table { width: 100%; border-collapse: collapse; }
         th, td { padding: 10px; border: 1px solid #ccc; text-align: center; }
@@ -11,7 +23,32 @@
         .content-preview { text-align: left; }
     </style>
 </head>
+
 <body>
+
+<!-- ✅ 상단 헤더 -->
+<div class="header-bar">
+
+    <div class="icon-box">
+        <img src="${pageContext.request.contextPath}/static/img/bell.png" alt="알림" class="icon-img">
+        <span class="badge">3+</span>
+    </div>
+
+    <div class="icon-box">
+        <img src="${pageContext.request.contextPath}/static/img/mail.png" alt="메일" class="icon-img">
+        <span class="badge">7</span>
+<%--        <a href="https://www.flaticon.com/kr/free-icons/" title="메일 아이콘">메일 아이콘 제작자: wahya - Flaticon</a>--%>
+    </div>
+
+    <div class="username">
+        ${loginUser.uname}
+    </div>
+
+    <img src="${pageContext.request.contextPath}/static/img/jin.png" alt="프로필" class="profile-img">
+
+</div>
+
+<!-- ✨ 본문 시작 -->
 
 <h2>📄 게시판 목록</h2>
 
@@ -31,7 +68,7 @@
 
 <br/>
 
-<!-- 📋 목록 테이블 -->
+<!-- 📋 게시판 테이블 -->
 <table>
     <thead>
     <tr>

@@ -8,7 +8,7 @@
         insert into tb_board (title, content, writer, regDate) values (#{title},#{content},#{writer},NOW())
     </insert>
 
-    <select id="selectAll" resultType="com.ssg.board.domain.BoardVO">
+    <select id="getList" resultType="com.ssg.board.domain.BoardVO">
         select bno, title, content, writer, regDate, updateDate from tb_board order by bno desc
     </select>
 
