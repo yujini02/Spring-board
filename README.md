@@ -12,7 +12,7 @@ Spring Framework 기반의 로그인 + 게시판 구현 프로젝트입니다.
 - **MyBatis**
 - **Gradle**
 - **JSP** 
-- **MySQL** (선택)
+- **MySQL**
 
 ---
 
