@@ -46,3 +46,9 @@ src/
 ├── build.gradle
 └── settings.gradle
 ```
+
+🎯 Learning Points
+Spring MVC 아키텍처 흐름 이해
+MyBatis Mapper 연동 실습
+Session 기반 인증 구조 구현
+게시판 비즈니스 로직 분리 연습
